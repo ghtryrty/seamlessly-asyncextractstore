@@ -1,17 +1,20 @@
-function countPrimes(n) {
-  const isPrime = new Array(n).fill(true);
-  isPrime[0] = false;
-  isPrime[1] = false;
-  for (let i = 2; i * i < n; i++) {
-    if (isPrime[i]) {
-      for (let j = i * i; j < n; j += i) {
-        isPrime[j] = false;
-      }
-    }
+function longestPalindrome(s) {
+  let longest = "";
+  for (let i = 0; i < s.length; i++) {
+    const oddPalindrome = expandAroundCenter(s, i, i);
+    const evenPalindrome = expandAroundCenter(s, i, i + 1);
+    const currentLongest =
+      oddPalindrome.length > evenPalindrome.length
+        ? oddPalindrome
+        : evenPalindrome;
+    if (currentLongest.length > longest.length) longest = currentLongest;
   }
-  let count = 0;
-  for (let i = 2; i < n; i++) {
-    if (isPrime[i]) count++;
+  return longest;
+}
+function expandAroundCenter(s, left, right) {
+  while (left >= 0 && right < s.length && s[left] === s[right]) {
+    left--;
+    right++;
   }
-  return count;
+  return s.slice(left + 1, right);
 }
