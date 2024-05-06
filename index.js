@@ -1,20 +1,9 @@
-function longestPalindrome(s) {
-  let longest = "";
-  for (let i = 0; i < s.length; i++) {
-    const oddPalindrome = expandAroundCenter(s, i, i);
-    const evenPalindrome = expandAroundCenter(s, i, i + 1);
-    const currentLongest =
-      oddPalindrome.length > evenPalindrome.length
-        ? oddPalindrome
-        : evenPalindrome;
-    if (currentLongest.length > longest.length) longest = currentLongest;
+function maxProfit(prices) {
+  let minPrice = Infinity;
+  let maxProfit = 0;
+  for (const price of prices) {
+    minPrice = Math.min(minPrice, price);
+    maxProfit = Math.max(maxProfit, price - minPrice);
   }
-  return longest;
-}
-function expandAroundCenter(s, left, right) {
-  while (left >= 0 && right < s.length && s[left] === s[right]) {
-    left--;
-    right++;
-  }
-  return s.slice(left + 1, right);
+  return maxProfit;
 }
